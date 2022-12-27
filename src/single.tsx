@@ -18,6 +18,8 @@ import {
   DatepickerProps,
   OnDateSelected,
 } from './utils/commonTypes';
+import moment from 'moment';
+import 'moment/locale/th'
 
 export interface SingleDatepickerProps extends DatepickerProps {
   date?: Date;
@@ -83,6 +85,9 @@ export const SingleDatepicker: React.FC<SingleDatepickerProps> = ({
   };
 
   const PopoverContentWrapper = usePortal ? Portal : React.Fragment;
+  useEffect(() => {
+    moment.locale('th')
+  }, []);
 
   return (
     <Popover
@@ -106,7 +111,7 @@ export const SingleDatepicker: React.FC<SingleDatepickerProps> = ({
           isDisabled={disabled}
           name={name}
           value={
-            selectedDate ? format(selectedDate, calendarConfigs.dateFormat) : ''
+            selectedDate ? moment(selectedDate).format(calendarConfigs.dateFormat) : ''
           }
           onChange={(e) => e.target.value}
           {...propsConfigs?.inputProps}
